@@ -1,0 +1,44 @@
+@charset "utf-8";
+@import url(//fonts.googleapis.com/css?family=Raleway:400,200,100,500,600,700,800,900);
+@import url(//fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900);
+
+*{
+    
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
+    transform: none !important;
+    -webkit-transfrom: none !important;
+
+    
+}
+
+
+body {
+    height: 100%;
+  text-align: center;
+  
+    color: #000000;
+     background-color: #b0bac1;
+    background-image: url("images/i.jpg"); 
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+
+
+}
+.glass {
+    margin-top: 20%;max-width:500px;border-radius: 10px;
+    background-image: url("images/i-blur.jpg"); 
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+  
+}

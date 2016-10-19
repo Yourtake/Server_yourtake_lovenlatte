@@ -1,0 +1,173 @@
+@font-face {
+font-family: Bebas;
+src: url("fonts/BebasNueue.otf") format("opentype");
+}                  
+*{
+    
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
+    transform: none !important;
+    -webkit-transfrom: none !important;
+
+    
+}
+
+body {
+                        
+    background-image: url("images/back.jpg"); 
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+                                     font-family: 'Lato', sans-serif;
+                                    padding-top: 10px;
+                              padding-bottom: 10px;
+                              padding-left:  20px;
+                              padding-right: 20px;
+                              color: #ffffff;
+    text-shadow: 2px 2px 4px #000000;
+                                  }
+                                  .text-muted{
+                                        color: #ffffff !important;
+                                         text-shadow: 2px 2px 4px #000000 !important;
+                                  }
+                                  .header{
+
+                              padding-right: 15px;
+                              padding-left: 15px;  
+                                  }
+                          
+                            .col-md-6 {
+                             min-height: 30px;
+                             min-width: 30px;
+                            }
+                            .box{
+                            padding-top: 20px;
+                              padding-right: 15px;
+                              padding-left: 15px;  
+                            }
+                            .placeholder{
+                                
+    background-color:rgba(0,0,0,0.5);
+    border-radius: 10px;
+    height: 170px !important;
+    
+                            }
+                            .testimonials{
+                                background-color:rgba(0,0,0,0.5);
+    border-radius: 10px;
+    margin-top:90px;
+                            }
+                          
+                            .panel{
+                            background:inherit !important;
+   
+                            }  
+                            
+                            
+                            
+                            /* carousel */
+                            #quote-carousel {
+                              padding: 0 10px 20px 10px;
+                              margin-top: 20px;
+                              text-align:center;
+                            }
+                            /* indicator position */
+                            #quote-carousel .carousel-indicators {
+                              right: 50%;
+                              top: auto;
+                              bottom: -10px;
+                              margin-right: -19px;
+                            }
+                            /* indicator color */
+                            #quote-carousel .carousel-indicators li {
+                              background: #c0c0c0;
+                            }
+                            /* active indicator */
+                            #quote-carousel .carousel-indicators .active {
+                              background: #333333;
+                              height:10px;
+                              width:10px;
+                              margin-bottom:1px;
+                            }
+                            /* typography */
+                            h3 {
+                                        color: #ffffff !important;
+                                         text-shadow: 2px 2px 4px #000000 !important;
+                                
+                              text-align:center;
+                              margin-bottom:-10px !important;
+                            }
+                            p {
+                              font-style:italic;
+                            }
+                            .mobile-hide{
+                                display: none;
+                            }
+                            .col_half { width: 49%; }
+.col_third { width: 32%; }
+.col_fourth { width: 23.5%; }
+.col_fifth { width: 18.4%; }
+.col_sixth { width: 15%; }
+.col_three_fourth { width: 74.5%;}
+.col_twothird{ width: 66%;}
+.col_half,
+.col_third,
+.col_twothird,
+.col_fourth,
+.col_three_fourth,
+.col_fifth{
+	position: relative;
+	display:inline;
+	display: inline-block;
+	float: left;
+	margin-right: 2%;
+	margin-bottom: 20px;
+}
+.end { margin-right: 0 !important; }
+/* Column Grids End */
+
+.wrapper { width: 300px; margin: 5px auto; position: relative;}
+.counter { background-color: #000000; padding: 20px 0; border-radius: 5px;}
+.count-title { font-size: 10px; font-weight: normal;  margin-top: 5px; margin-bottom: 0; text-align: center; }
+.count-text { font-size: 8px; font-weight: normal;  margin-top: 5px; margin-bottom: 0; text-align: center; }
+.fa-2x { margin: 0 auto; float: none; display: table; color: #4ad1e5; }
+                            @media screen and (min-width: 640px) {
+                                #logo{
+                                    width:200px;
+                                    
+                                }
+                                #new-box{
+                                    width:180px;
+                                }
+                                #facts-box{
+                                    width:170px;
+                                }
+                                #menu-box{
+                                    width:120px;
+                                }
+                                #feedback-box{
+                                    width:150px;
+                                    
+                                }
+                                .placeholder{
+                                    padding-top: 30px;
+                                    
+    height: 350px !important;
+    width:250px;
+                                }
+                                .mobile-hide{
+                                display:block !important;
+                            }
+                            .testimonials{
+                                margin-top: 180px;
+                            }
+                            
+                            .wrapper { width: 600px; margin: 10px auto; position: relative;}
+.counter { background-color: #000000; padding: 20px 0; border-radius: 5px;}
+.count-title { font-size: 20px; font-weight: normal;  margin-top: 10px; margin-bottom: 0; text-align: center; }
+.count-text { font-size: 16px; font-weight: normal;  margin-top: 10px; margin-bottom: 0; text-align: center; }
+                            }

@@ -1,0 +1,79 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 22, 2016, 12:34:15 AM
+    Author     : Administrator
+*/
+*{
+    
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
+    transform: none !important;
+    -webkit-transfrom: none !important;
+
+    
+}
+body {
+    
+                                      background-image: url("images/back.jpg"); 
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+                                     font-family: 'Lato', sans-serif;
+                                    padding-top: 10px;
+                              padding-bottom: 10px;
+                              padding-left:  20px;
+                              padding-right: 20px;
+                              color: #ffffff;
+    text-shadow: 4px 4px 8px #000000;
+    font-weight: bold;
+                                  }
+                                  table, td{
+                                      border-color: rgba(0,0,0,0.8) !important;
+                                      background-color: rgba(0,0,0,0.1);
+                                      
+                                  }
+                                  
+                                  table{
+                                      table-layout: fixed;
+                                      text-align: center;
+                                      width: 300px !important;
+                                  }
+                                  .item-price{
+                                      margin-right: 300px !important;
+                                  }
+                                  cart{
+                                      width:20px;
+                                      font-size: 6px;
+                                      background-color: rgba(0,0,0,0.6);
+                                  }
+                                 
+ @media screen and (min-width: 640px) {
+                                #logo{
+                                    width:200px;
+                                    height:180px;
+                                }
+                                     table{
+                                          table-layout: fixed;
+                                      text-align: center;
+                                      width: 500px !important;
+                                  }
+                           
+                            }
+                            
+                             @media screen and (min-width: 900px) {
+                              
+                                     table{
+                                          table-layout: fixed;
+                                      text-align: center;
+                                      width: 720px !important;
+                                  }
+                           
+                            }
