@@ -27,13 +27,12 @@
              <link type="text/css" href="<c:url value="/resources/css/star-rating.min.css" />" rel="stylesheet">
              <link type="text/css" href="<c:url value="/resources/css/theme.min.css" />" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
-            <script async type="text/javascript" src="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" />"></script>
-            <link type="text/css" href="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css" />" rel="stylesheet">        
-            <script src="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>" type="text/javascript"></script>
-            <script type="text/javascript" src="<c:url value="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.3.0/bootbox.min.js" />"></script>
-             <link type="text/css" href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" />" rel="stylesheet">        
-            <script src="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"/>" type="text/javascript"></script>
-        
+           
+                                   <link type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+                                    <script async type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+                                    <link type="text/css" href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet">        
+                                    <script src="<c:url value="/resources/js/jquery.min.js"/>" type="text/javascript"></script>
+                                    <script type="text/javascript" src="<c:url value="/resources/js/bootbox.min.js" />"></script>
             <link type="text/css" href="<c:url value="/resources/css/new.css" />" rel="stylesheet">   
             
     </head>
