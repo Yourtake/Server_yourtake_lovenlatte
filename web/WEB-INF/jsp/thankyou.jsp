@@ -52,7 +52,7 @@
                          <div class="container">
                                 <div class="row">
                                  <div class="col-xs-12">
-                                     <a style="color:white" href="${pageContext.request.contextPath}"> <h3 style="text-align: left"><span class="glyphicon glyphicon-circle-arrow-left"></span>&nbsp;Back</h3></a>
+                                     <a style="color:white" href="${pageContext.request.contextPath}/"> <h3 style="text-align: left"><span class="glyphicon glyphicon-circle-arrow-left"></span>&nbsp;Back</h3></a>
                                  </div>
                               </div>
                                 </div>
