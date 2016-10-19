@@ -21,20 +21,18 @@
             
             <link href="<c:url value="/resources/images/logo.png" />" rel="shortcut icon">
             <link type="text/css" href="<c:url value="/resources/css/jquery-ui-1.10.4.css" />" rel="stylesheet">
-            <link type="text/css" href="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />" rel="stylesheet">
             
-            <link type="text/css" href="<c:url value="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />" rel="stylesheet">
+            <link type="text/css" href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
              <link type="text/css" href="<c:url value="/resources/css/star-rating.min.css" />" rel="stylesheet">
              <link type="text/css" href="<c:url value="/resources/css/theme.min.css" />" rel="stylesheet">
              <link type="text/css" href="<c:url value="/resources/css/feedback.css" />" rel="stylesheet">   
             <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
-            <script async type="text/javascript" src="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" />"></script>
-            <link type="text/css" href="<c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css" />" rel="stylesheet">        
-            <script src="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"/>" type="text/javascript"></script>
-            <script type="text/javascript" src="<c:url value="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.3.0/bootbox.min.js" />"></script>
-             <link type="text/css" href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap3/bootstrap-switch.min.css" />" rel="stylesheet">        
-            <script src="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"/>" type="text/javascript"></script>
-              
+            
+                                   <link type="text/css" href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+                                    <script async type="text/javascript" src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+                                    <link type="text/css" href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet">        
+                                    <script src="<c:url value="/resources/js/jquery.min.js"/>" type="text/javascript"></script>
+                                    <script type="text/javascript" src="<c:url value="/resources/js/bootbox.min.js" />"></script>
             <script src="<c:url value="/resources/js/star-rating.min.js"/>" type="text/javascript"></script>  
             <script src="<c:url value="/resources/js/theme.min.js"/>" type="text/javascript"></script>
             
@@ -42,7 +40,7 @@
     </head>
        
     <body>
-          <div class="site-wrapper">
+          <div class="site-wrapper" style="color:#ffffff">
             <div class="site-wrapper-inner">
                        <div class="container">
                            <div class="header clearfix">
@@ -55,7 +53,7 @@
                          <div class="container">
                                 <div class="row">
                                  <div class="col-xs-12">
-                                     <a style="color:white" href="${pageContext.request.contextPath}"> <h3 style="text-align: left"><span class="glyphicon glyphicon-circle-arrow-left"></span>&nbsp;Back</h3></a>
+                                     <a style="color:white" href="${pageContext.request.contextPath}/"> <h3 style="text-align: left"><span class="glyphicon glyphicon-circle-arrow-left"></span>&nbsp;Back</h3></a>
                                  </div>
                               </div>
                                 </div>
