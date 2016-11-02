@@ -39,7 +39,7 @@ AdminMaintainService adminMaintain;
            
             ModelAndView model=null;
 //            Cookie[] cookieList = request.getCookies();
-            boolean alreadyVisited=true;
+            boolean alreadyVisited=false;
 //            for(Cookie cookie:cookieList){
 //                if(cookie.getName().equals("val")&&cookie.getValue().equals(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))){
 //                    alreadyVisited=true;
@@ -70,7 +70,7 @@ AdminMaintainService adminMaintain;
                 client.setDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             }
                 client.setReply(replyList);
-            
+              System.out.println("Save client");
             if(adminMaintain.makeClient(client)!=null){
                 Float service= Float.parseFloat(request.getParameter("service"));
                 Float menu= Float.parseFloat(request.getParameter("menu"));
@@ -129,17 +129,17 @@ AdminMaintainService adminMaintain;
    @RequestMapping(value="/feedback")
     public ModelAndView feedback(HttpSession session,HttpServletRequest request) {
         ModelAndView model= new ModelAndView("feedback");
-        Cookie[] cookieList = request.getCookies();
-            boolean alreadyVisited=false;
-            for(Cookie cookie:cookieList){
-                if(cookie.getName().equals("val")&&cookie.getValue().equals(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))){
-                    alreadyVisited=true;
-                }
-            }
-            if(alreadyVisited){
-           model= new ModelAndView("thankyou");
-                        model.addObject("message", "Thank You");
-            }
+//        Cookie[] cookieList = request.getCookies();
+//            boolean alreadyVisited=false;
+//            for(Cookie cookie:cookieList){
+//                if(cookie.getName().equals("val")&&cookie.getValue().equals(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))){
+//                    alreadyVisited=true;
+//                }
+//            }
+//            if(alreadyVisited){
+//           model= new ModelAndView("thankyou");
+//                        model.addObject("message", "Thank You");
+//            }
     return model;
     } 
      @RequestMapping(value="/menu")
