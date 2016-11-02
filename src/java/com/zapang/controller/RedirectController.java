@@ -34,23 +34,25 @@ AdminMaintainService adminMaintain;
     public RedirectController() {
     }
     
-      @RequestMapping(value="/feedback/response")
+      @RequestMapping(value="/feedback/response",method=RequestMethod.POST)
         public ModelAndView response(HttpServletRequest request ,HttpServletResponse response) {
            
             ModelAndView model=null;
-            Cookie[] cookieList = request.getCookies();
-            boolean alreadyVisited=false;
-            for(Cookie cookie:cookieList){
-                if(cookie.getName().equals("val")&&cookie.getValue().equals(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))){
-                    alreadyVisited=true;
-                }
-            }
+//            Cookie[] cookieList = request.getCookies();
+            boolean alreadyVisited=true;
+//            for(Cookie cookie:cookieList){
+//                if(cookie.getName().equals("val")&&cookie.getValue().equals(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))){
+//                    alreadyVisited=true;
+//                }
+//            }
+
+          System.out.println("Got a request");
             if(!alreadyVisited){
             Client client = new Client();
             client.setEmailId(request.getParameter("email"));
             client.setName(request.getParameter("name"));
             client.setPhoneNumber(request.getParameter("number"));
-            client.setIpAddress(request.getRemoteAddr());
+//            client.setIpAddress(request.getRemoteAddr());
             List<Reply> replyList = new ArrayList<>();
             replyList.add(new Reply("options","visit",request.getParameter("visit"),client));
             replyList.add(new Reply("rating","service",request.getParameter("service"),client));
@@ -61,8 +63,13 @@ AdminMaintainService adminMaintain;
             replyList.add(new Reply("rating","overall",request.getParameter("overall"),client));
             replyList.add(new Reply("rating","refer",request.getParameter("refer"),client));
             replyList.add(new Reply("descriptive","better",request.getParameter("better"),client));
-            client.setDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-            client.setReply(replyList);
+            if(request.getParameter("date")!=null){
+                client.setDate(request.getParameter("date"));
+            }
+            else{
+                client.setDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            }
+                client.setReply(replyList);
             
             if(adminMaintain.makeClient(client)!=null){
                 Float service= Float.parseFloat(request.getParameter("service"));
@@ -92,8 +99,8 @@ AdminMaintainService adminMaintain;
                           adminMaintain.sendOkayClientEmailAndSMSUpdate(request.getParameter("email"),request.getParameter("number"),request.getParameter("name"));
               
                   }
-                  Cookie myCookie =new Cookie("val", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-                  response.addCookie(myCookie);
+//                  Cookie myCookie =new Cookie("val", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+//                  response.addCookie(myCookie);
                         model= new ModelAndView("thankyou");
                         model.addObject("message", "Thank You");
                     }

@@ -91,7 +91,7 @@
                                       <div class="col-xs-12">
                                           <h4><span class="glyphicon glyphicon-road"></span>&nbsp;How often do you visit us?</h4>
                                           <div class="rad">
-                                          <input  type="radio" value="daily" name="visit" multiple="false"/>&nbsp;Daiy<br/>
+                                          <input  type="radio" value="daily" name="visit" multiple="false"/>&nbsp;Daily<br/>
                                           <input  type="radio" value="weekly"  name="visit" multiple="false"/>&nbsp;Weekly<br/>
                                            <input  type="radio" value="monthly" name="visit" multiple="false"/>&nbsp;Monthly<br/>
                                            <input  type="radio" value="seldom" name="visit" multiple="false"/>&nbsp;Seldom<br/>
