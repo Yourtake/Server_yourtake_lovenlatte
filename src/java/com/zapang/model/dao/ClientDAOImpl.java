@@ -72,7 +72,7 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
         return (T) client;
     }
 
-    public Object readProperty(String listType) {
+    public Object readProperty(String listType,String name, String number, String email,String ipAddress, String date) {
         List<Client> client=null;
         switch(listType){
             case "All":
@@ -84,6 +84,34 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
            for(Client tclient:client){
                tclient.getReply().size();
            }
+            session.getTransaction().commit();
+        }
+        catch(Exception e){
+            session.getTransaction().rollback();
+            System.out.println("Error in building Admin and its properties at AdminDAO "+e);
+            e.printStackTrace();
+            client=null;
+        }
+        finally{
+            if(session!=null){
+            if(session.isOpen()){
+                session.close();
+            }
+            }
+        }
+        case "NameNumberEmailIpaddressDate":
+                
+        try{
+            session = getSessionFactory().openSession();
+            session.beginTransaction();
+           client = (List<Client>)  session.createCriteria(Client.class).add(
+           Restrictions.and(
+                   Restrictions.and(
+                            Restrictions.and(Restrictions.eq("name", name),Restrictions.eq("phoneNumber", number)),
+                            Restrictions.and(Restrictions.eq("ipAddress", ipAddress),Restrictions.eq("date", date))
+                    ),
+                   Restrictions.eq("emailId", email))
+           ).list();
             session.getTransaction().commit();
         }
         catch(Exception e){

@@ -180,7 +180,11 @@ ClientDAOImpl cdao;
     return (List<Message>) adao.readPropertyList(admin, "Sent");
     }
     public List<Client> getData(){
-        return (List<Client>) cdao.readProperty("All");
+        return (List<Client>) cdao.readProperty("All",null,null,null,null,null);
+    }
+    
+    public List<Client> getSpecificData(String name, String number, String email, String date, String ipAddress){
+        return (List<Client>) cdao.readProperty("NameNumberEmailIpaddressDate",name,number,email,ipAddress,date);
     }
 public Client makeClient(Client client){
     return (Client) cdao.buildEntity(client);

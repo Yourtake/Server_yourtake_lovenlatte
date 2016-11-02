@@ -46,12 +46,27 @@ AdminMaintainService adminMaintain;
 //                }
 //            }
 
+            List<Client> clientList=adminMaintain.getSpecificData(request.getParameter("name"), request.getParameter("number"),request.getParameter("email"), request.getParameter("date"),request.getParameter("ipaddress"));
+            if(clientList!=null&&!clientList.isEmpty()){
+                    alreadyVisited=true;
+            }
+
           System.out.println("Got a request");
+          
+          
+          
             if(!alreadyVisited){
             Client client = new Client();
             client.setEmailId(request.getParameter("email"));
             client.setName(request.getParameter("name"));
             client.setPhoneNumber(request.getParameter("number"));
+            if(request.getParameter("ipaddress")!=null){
+                client.setIpAddress(request.getParameter("ipaddress"));
+            }
+            else{
+                
+                client.setIpAddress(request.getRemoteAddr());
+            }
 //            client.setIpAddress(request.getRemoteAddr());
             List<Reply> replyList = new ArrayList<>();
             replyList.add(new Reply("options","visit",request.getParameter("visit"),client));
