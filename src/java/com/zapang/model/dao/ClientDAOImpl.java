@@ -21,6 +21,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -45,65 +47,37 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
         }
 
     @Override
+       @Transactional(propagation = Propagation.REQUIRED)
     public Object buildEntity(Object entity) {
          Client client = (Client) entity;
          
-        try{
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
+            session = getSessionFactory().getCurrentSession();
+            
             session.save(client);
             client = (Client) session.get(Client.class, client.getId());
-            session.getTransaction().commit();
-        }
-        catch(Exception e){
-            session.getTransaction().rollback();
-            System.out.println("Error in building Admin and its properties at AdminDAO "+e);
-            e.printStackTrace();
-            client=null;
-        }
-        finally{
-            if(session!=null){
-            if(session.isOpen()){
-                session.close();
-            }
-            }
-            session=null;
-        }
+            
+ 
         return (T) client;
     }
-
+@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public Object readProperty(String listType,String name, String number, String email,String ipAddress, String date) {
         List<Client> client=null;
         switch(listType){
             case "All":
                 
-        try{
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
+            session = getSessionFactory().getCurrentSession();
+            
            client = (List<Client>)  session.createCriteria(Client.class).list();
            for(Client tclient:client){
                tclient.getReply().size();
            }
-            session.getTransaction().commit();
-        }
-        catch(Exception e){
-            session.getTransaction().rollback();
-            System.out.println("Error in building Admin and its properties at AdminDAO "+e);
-            e.printStackTrace();
-            client=null;
-        }
-        finally{
-            if(session!=null){
-            if(session.isOpen()){
-                session.close();
-            }
-            }
-        }
+            
+       
         case "NameNumberEmailIpaddressDate":
                 
-        try{
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
+        
+            session = getSessionFactory().getCurrentSession();
+            
            client = (List<Client>)  session.createCriteria(Client.class).add(
            Restrictions.and(
                    Restrictions.and(
@@ -112,33 +86,20 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
                     ),
                    Restrictions.eq("emailId", email))
            ).list();
-            session.getTransaction().commit();
-        }
-        catch(Exception e){
-            session.getTransaction().rollback();
-            System.out.println("Error in building Admin and its properties at AdminDAO "+e);
-            e.printStackTrace();
-            client=null;
-        }
-        finally{
-            if(session!=null){
-            if(session.isOpen()){
-                session.close();
-            }
-            }
-        }
+            
+        
             default:       
         }
         return (T) client;
     }
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public Object readInnerProperty(String type,String paramId,String calType){
         String average=null;
         List<Reply> list=null;
         switch(type){
         case "rating":
-            try{
                 session=getSessionFactory().openSession();
-                session.beginTransaction();
+                
                Criteria criteria= session.createCriteria(Reply.class, "reply" );
                criteria.createAlias("reply.client", "client");
                criteria.setReadOnly(true);
@@ -180,7 +141,7 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
                criteria.add(Restrictions.ne("reply.answer", "0"));
                criteria.setResultTransformer(criteria.DISTINCT_ROOT_ENTITY);
                list=(List<Reply>)criteria.list();
-               session.getTransaction().commit();
+               
                Float value=0.0f;
                for(Reply val:list){
                    value+=Float.parseFloat(val.getAnswer());
@@ -188,16 +149,6 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
                value/=list.size();
                average=value.toString();
                 
-            }
-            catch(Exception e){
-                session.getTransaction().rollback();
-                e.printStackTrace();
-            }
-            finally{
-                if(session.isOpen()){
-                    session.close();
-                }
-            }
         case "descriptive":
         case "options":
         case "binary":
@@ -205,14 +156,15 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
     }
         return average;
     }
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
       public Object readInnerPropertyToday(String type,String paramId,String date,String calType){
         String average=null;
         List<Reply> list=null;
         switch(type){
         case "rating":
-            try{
+            
                 session=getSessionFactory().openSession();
-                session.beginTransaction();
+                
                Criteria criteria= session.createCriteria(Reply.class, "reply" );
                criteria.createAlias("reply.client","client");
                criteria.setReadOnly(true);
@@ -220,7 +172,7 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
                criteria.add(Restrictions.eq("reply.question", paramId));
                criteria.add(Restrictions.eq("reply.type", type));
                list=(List<Reply>)criteria.list();
-               session.getTransaction().commit();
+               
                Float value=0.0f;
                for(Reply val:list){
                    value+=Float.parseFloat(val.getAnswer());
@@ -228,16 +180,6 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
                value/=list.size();
                average=value.toString();
                 
-            }
-            catch(Exception e){
-                session.getTransaction().rollback();
-                e.printStackTrace();
-            }
-            finally{
-                if(session.isOpen()){
-                    session.close();
-                }
-            }
         case "descriptive":
         case "options":
         case "binary":
@@ -245,38 +187,25 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
     }
         return average;
     }
+      @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     public Long fetchEntitySizeToday() {
         Long size=0l;
-       try{
-                      session = getSessionFactory().openSession();
-                      session.beginTransaction();
+                      session = getSessionFactory().getCurrentSession();
+                      
                       Criteria criteria = session.createCriteria(Client.class, "call");
                       criteria.setReadOnly(true);
                       criteria.add(Restrictions.like("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()),MatchMode.START));
                       criteria.setProjection(Projections.rowCount());
                       size = (Long) criteria.uniqueResult();
-                      session.getTransaction().commit();
+                      
 
-                    }
-                    catch(Exception e){
-                        session.getTransaction().rollback();
-                        System.out.println("Error in deleting Items and its properties at ItemsDAO "+e);
-                        e.printStackTrace();
-                    }
-                finally{
-                    if(session!=null){
-                    if(session.isOpen()){
-                        session.close();
-                    }}
-                    session=null;
-                }
        return size;
     }
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
      public String fetchAvgByTypeAndDate(String type,String date) {
      String average=null;
-       try{
-                      session = getSessionFactory().openSession();
-                      session.beginTransaction();
+                      session = getSessionFactory().getCurrentSession();
+                      
                       Criteria criteria = session.createCriteria(Reply.class, "reply");
                       criteria.setReadOnly(true);
                       criteria.createAlias("reply.client", "client");
@@ -285,7 +214,7 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
                criteria.add(Restrictions.ne("reply.answer", "0"));
                       criteria.setResultTransformer(criteria.DISTINCT_ROOT_ENTITY);
                      List<Reply> list = criteria.list();
-                       session.getTransaction().commit();
+                       
                         Float value=0.0f;
                         for(Reply val:list){
                             value+=Float.parseFloat(val.getAnswer());
@@ -293,30 +222,14 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
                         value/=list.size();
                         average=value.toString();
 
-                    }
-                    catch(Exception e){
-                        
-                        if (session.getTransaction().wasCommitted()){
-                        session.getTransaction().rollback();
-                        }
-                        System.out.println("Error in deleting Items and its properties at ItemsDAO "+e);
-                        e.printStackTrace();
-                    }
-                finally{
-                    if(session!=null){
-                    if(session.isOpen()){
-                        session.close();
-                    }}
-                    session=null;
-                }
        return average;
     }
-    
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
      public Long getProm(){
          Long val=null;
-       try{
-                      session = getSessionFactory().openSession();
-                      session.beginTransaction();
+       
+                      session = getSessionFactory().getCurrentSession();
+                      
                       Criteria criteria = session.createCriteria(Reply.class, "reply");
                       criteria.setReadOnly(true);
                       criteria.add(Restrictions.like("reply.type", "rating"));
@@ -326,32 +239,14 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
                       criteria.setProjection(Projections.rowCount());
                      val = (Long) criteria.uniqueResult();
                       
-                       session.getTransaction().commit();
-                        
-
-                    }
-                    catch(Exception e){
-                        
-                        if (session.getTransaction().wasCommitted()){
-                        session.getTransaction().rollback();
-                        }
-                        System.out.println("Error in deleting Items and its properties at ItemsDAO "+e);
-                        e.printStackTrace();
-                    }
-                finally{
-                    if(session!=null){
-                    if(session.isOpen()){
-                        session.close();
-                    }}
-                    session=null;
-                }
        return val;
      }
+     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
      public Long getPass(){
            Long val=null;
-       try{
-                      session = getSessionFactory().openSession();
-                      session.beginTransaction();
+       
+                      session = getSessionFactory().getCurrentSession();
+                      
                       Criteria criteria = session.createCriteria(Reply.class, "reply");
                       criteria.setReadOnly(true);
                       criteria.add(Restrictions.like("reply.type", "rating"));
@@ -360,32 +255,17 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
                       criteria.setProjection(Projections.rowCount());
                      val = (Long) criteria.uniqueResult();
                       
-                       session.getTransaction().commit();
+                       
                         
 
-                    }
-                    catch(Exception e){
-                        
-                        if (session.getTransaction().wasCommitted()){
-                        session.getTransaction().rollback();
-                        }
-                        System.out.println("Error in deleting Items and its properties at ItemsDAO "+e);
-                        e.printStackTrace();
-                    }
-                finally{
-                    if(session!=null){
-                    if(session.isOpen()){
-                        session.close();
-                    }}
-                    session=null;
-                }
        return val;
      }
+     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
       public Long getDet(){
            Long val=null;
-       try{
-                      session = getSessionFactory().openSession();
-                      session.beginTransaction();
+       
+                      session = getSessionFactory().getCurrentSession();
+                      
                       Criteria criteria = session.createCriteria(Reply.class, "reply");
                       criteria.setReadOnly(true);
                       criteria.add(Restrictions.like("reply.type", "rating"));
@@ -393,27 +273,7 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
                       criteria.add(Restrictions.or(Restrictions.like("reply.answer", "0",MatchMode.START),Restrictions.like("reply.answer", "1",MatchMode.START)));
                       criteria.setProjection(Projections.rowCount());
                       val = (Long) criteria.uniqueResult();
-                      
-                       session.getTransaction().commit();
-                        
-                    
 
-                    }
-                    catch(Exception e){
-                        
-                        if (session.getTransaction().wasCommitted()){
-                        session.getTransaction().rollback();
-                        }
-                        System.out.println("Error in deleting Items and its properties at ItemsDAO "+e);
-                        e.printStackTrace();
-                    }
-                finally{
-                    if(session!=null){
-                    if(session.isOpen()){
-                        session.close();
-                    }}
-                    session=null;
-                }
        return val;
      }
     

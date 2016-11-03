@@ -44,10 +44,6 @@ public class Admin  implements java.io.Serializable{
      private String name;
      
               
-   @OneToMany(mappedBy="sender")
-   List<Message> sentMessageList = new ArrayList();
-   @OneToMany(mappedBy="receiver")
-   List<Message> receivedMessageList = new ArrayList();
 
      
      
@@ -151,21 +147,6 @@ public class Admin  implements java.io.Serializable{
         this.role = role;
     }
 
-    public List<Message> getSentMessageList() {
-        return sentMessageList;
-    }
-
-    public void setSentMessageList(List<Message> sentMessageList) {
-        this.sentMessageList = sentMessageList;
-    }
-
-    public List<Message> getReceivedMessageList() {
-        return receivedMessageList;
-    }
-
-    public void setReceivedMessageList(List<Message> receivedMessageList) {
-        this.receivedMessageList = receivedMessageList;
-    }
 
   
     

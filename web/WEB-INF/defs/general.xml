@@ -17,14 +17,6 @@
       <put-attribute name="navigation" value="/WEB-INF/layout/adminlayout.jsp"/>
       
   </definition>
- <definition name="adminmail" template="/WEB-INF/jsp/adminmsg.jsp">
-      <put-attribute name="navigation" value="/WEB-INF/layout/adminlayout.jsp"/>
-      
-  </definition>
-  <definition name="adminsentmail" template="/WEB-INF/jsp/adminsentmsg.jsp">
-      <put-attribute name="navigation" value="/WEB-INF/layout/adminlayout.jsp"/>
-      
-  </definition>
   <definition name="adminhr" template="/WEB-INF/jsp/adminhumanresource.jsp">
       <put-attribute name="navigation" value="/WEB-INF/layout/adminlayout.jsp"/>
       

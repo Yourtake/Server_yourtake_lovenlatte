@@ -7,7 +7,7 @@
 package com.zapang.model.dao;
 
 import com.zapang.model.pojo.Admin;
-import com.zapang.model.pojo.Message;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -18,6 +18,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class AdminDAOImpl<T> implements java.io.Serializable, GenericDAO {
+    
     private Session session=null;
     @Autowired
     private SessionFactory sessionFactory;
@@ -33,33 +36,17 @@ public class AdminDAOImpl<T> implements java.io.Serializable, GenericDAO {
     }
    
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Object buildEntity(Object entity, boolean coded) {
          Admin admin = (Admin) entity;
          if(!coded){
             Md5PasswordEncoder encoder = new Md5PasswordEncoder();
             admin.setPassword(encoder.encodePassword(admin.getPassword(), null));
          }
-        try{
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
+            session = getSessionFactory().getCurrentSession();
             session.save(admin);
             admin = (Admin) session.get(Admin.class, admin.getUsername());
-            session.getTransaction().commit();
-        }
-        catch(Exception e){
-            session.getTransaction().rollback();
-            System.out.println("Error in building Admin and its properties at AdminDAO "+e);
-            e.printStackTrace();
-            admin=null;
-        }
-        finally{
-            if(session!=null){
-            if(session.isOpen()){
-                session.close();
-            }
-            }
-            session=null;
-        }
+       
         return (T) admin;
 
     }
@@ -71,115 +58,25 @@ public class AdminDAOImpl<T> implements java.io.Serializable, GenericDAO {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Object readProperty(Object paramId) {
         Admin admin=null;
-        try{
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
+            session = getSessionFactory().getCurrentSession();
             admin=(Admin) session.get(Admin.class, (String) paramId);
-            session.getTransaction().commit();
-        }
-        catch(Exception e){
-            session.getTransaction().rollback();
-            System.out.println("Error in getting Admin properties at AdminDAO "+e);
-            e.printStackTrace();
-            admin=null;
-
-        }
-        finally{
-            if(session!=null){
-            if(session.isOpen()){
-            session.close();
-           }
-            }
+     
             return (T) admin;
-        }
+        
     }
 
    
+    
     @Override
-    public Object readPropertyList(Object entity,String listType){
-        Admin admin =(Admin) entity;
-        List list=null;
-        switch (listType){
-            case "Inbox":
-                try{
-                    session = getSessionFactory().openSession();
-                    session.beginTransaction();
-                    admin=(Admin) session.get(Admin.class, admin.getUsername());
-                  
-                   
-                    Criteria criteria = session.createCriteria(Message.class,"msg");
-                   criteria.add(Restrictions.eq("msg.receiver.username", admin.getUsername()));
-                   criteria.addOrder(Order.desc("messageId"));
-                  
-                   criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-                    criteria.setFirstResult(0);
-                    criteria.setMaxResults(10);
-                   list=criteria.list();
-                    session.getTransaction().commit();
-                }
-                catch(Exception e){
-                    session.getTransaction().rollback();
-                    System.out.println("Error in reading Favourites at CustomerDAO "+e);
-                    e.printStackTrace();
-                    admin=null;
-                }
-                finally{
-                    if(session!=null){
-                    if(session.isOpen()){
-                session.close();
-            }}
-                    
-                }
-                break;
-             case "Sent":
-                   try{
-                    session = getSessionFactory().openSession();
-                    session.beginTransaction();
-                   
-                    admin=(Admin) session.get(Admin.class, admin.getUsername());
-         
-                   
-                    Criteria criteria = session.createCriteria(Message.class,"msg");
-                   criteria.add(Restrictions.eq("msg.sender.username", admin.getUsername()));
-                   criteria.addOrder(Order.desc("messageId"));
-                  
-                   criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-                    criteria.setFirstResult(0);
-                    criteria.setMaxResults(10);
-                    list=criteria.list();
-                    session.getTransaction().commit();
-                }
-                catch(Exception e){
-                    session.getTransaction().rollback();
-                    System.out.println("Error in reading Favourites at CustomerDAO "+e);
-                    e.printStackTrace();
-                    admin=null;
-                }
-                finally{
-                       if(session!=null){
-                    if(session.isOpen()){
-                session.close();
-            }}
-                }
-             
-                break;   
-             default :
-                System.out.println("Not an option");
-                admin=null;
-                break;
-        }
-        
-        return (T) list;
-    }
-    @Override
+       @Transactional(propagation = Propagation.REQUIRED)
     public boolean updateProperty(Object entity, Object paramVal, String paramType) {
          boolean flag=false;
         Admin admin=(Admin) entity;
-        try{
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
+            session = getSessionFactory().getCurrentSession();
+            
             if(!paramType.equals("All")){
                     admin=(Admin) session.get(Admin.class,admin.getUsername());
             }
@@ -199,23 +96,11 @@ public class AdminDAOImpl<T> implements java.io.Serializable, GenericDAO {
             }
             
             session.update(admin);
-            session.getTransaction().commit();
+            
             flag=true;
-        }
-        catch(Exception e){
-            session.getTransaction().rollback();
-            System.out.println("Error in updating Admin properties at AdminDAO "+e);
-            e.printStackTrace();
-        }
-        finally{
-            if(session!=null){
-            if(session.isOpen()){
-                session.close();
-            }
-            }
-            admin=null;
+       
             return flag;
-        }
+        
     }
 
     @Override
@@ -224,17 +109,18 @@ public class AdminDAOImpl<T> implements java.io.Serializable, GenericDAO {
     }
 
     @Override
+       @Transactional(propagation = Propagation.REQUIRED)
     public boolean deleteEntity(Object entity) {
              boolean flag=false;
         Admin admin = (Admin) entity;
         List<T> list;
         try{
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
+            session = getSessionFactory().getCurrentSession();
+            
             admin = (Admin) session.get(Admin.class, admin.getUsername());
             
             session.delete(admin);
-            session.getTransaction().commit();
+            
             flag=true;
         }
         catch(Exception e){
@@ -259,62 +145,30 @@ public class AdminDAOImpl<T> implements java.io.Serializable, GenericDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     @Override
+       @Transactional(propagation = Propagation.REQUIRED,readOnly = true)
 public List fetchEntities(String paramVal) {
-        List list=null;
+        List list=new ArrayList<T>();
         if(paramVal.equals("OrderStatus")){
-        try{
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
+       
+            session = getSessionFactory().getCurrentSession();
+            
             Criteria criteria=session.createCriteria(Admin.class,"admin");
             criteria.add(Restrictions.eq("admin.orderStatus", 1));
             list=criteria.list();
-            session.getTransaction().commit();
-        }
-        catch(Exception e){
-            session.getTransaction().rollback();
-            System.out.println("Error in getting Admin list at AdminDAO "+e);
-            e.printStackTrace();
-        
-
-        }
-        finally{
-            if(session!=null){
-            if(session.isOpen()){
-            session.close();
-           }}
-          
-        }
         }
           return list;
     }
+       @Transactional(propagation = Propagation.REQUIRED,readOnly = true)
     public List fetchEntities(int power) {
         List list=null;
-        try{
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
+            session = getSessionFactory().getCurrentSession();
+            
             Criteria criteria=session.createCriteria(Admin.class,"admin");
          //   criteria.add(Restrictions.or(Restrictions.eq("admin.power", power),Restrictions.gt("admin.power", power)));
             criteria.addOrder(Order.asc("admin.name"));
             criteria.addOrder(Order.asc("admin.power"));
             list=criteria.list();
-            session.getTransaction().commit();
-        }
-        catch(Exception e){
-            session.getTransaction().rollback();
-            System.out.println("Error in getting Admin list at AdminDAO "+e);
-            e.printStackTrace();
-        
-
-        }
-        finally{
-            if(session!=null){
-            if(session.isOpen()){
-            session.close();
-           }
-            }
-            session=null;
-            return list;
-        }
+      return list;
     }
     
     
@@ -341,33 +195,17 @@ public List fetchEntities(String paramVal) {
     }
 
     @Override
+       @Transactional(propagation = Propagation.REQUIRED)
     public Object buildEntity(Object entity) {
         Admin admin = (Admin) entity;
          
             Md5PasswordEncoder encoder = new Md5PasswordEncoder();
             admin.setPassword(encoder.encodePassword(admin.getPassword(), null));
-         
-        try{
-            session = getSessionFactory().openSession();
-            session.beginTransaction();
+         session = getSessionFactory().getCurrentSession();
+            
             session.save(admin);
             admin = (Admin) session.get(Admin.class, admin.getUsername());
-            session.getTransaction().commit();
-        }
-        catch(Exception e){
-            session.getTransaction().rollback();
-            System.out.println("Error in building Admin and its properties at AdminDAO "+e);
-            e.printStackTrace();
-            admin=null;
-        }
-        finally{
-            if(session!=null){
-            if(session.isOpen()){
-                session.close();
-            }
-            }
-            session=null;
-        }
+            
         return (T) admin;
     
     }
@@ -378,4 +216,9 @@ public List fetchEntities(String paramVal) {
         public void setSessionFactory(SessionFactory sessionFactory) {
             this.sessionFactory = sessionFactory;
         }
+
+    @Override
+    public Object readPropertyList(Object entity, String listType) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

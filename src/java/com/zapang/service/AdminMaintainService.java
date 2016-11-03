@@ -11,10 +11,8 @@ import com.zapang.backend.LoginInfoService;
 import com.zapang.backend.SMSSending;
 import com.zapang.model.dao.AdminDAOImpl;
 import com.zapang.model.dao.ClientDAOImpl;
-import com.zapang.model.dao.MessageDAOImpl;
 import com.zapang.model.pojo.Admin;
 import com.zapang.model.pojo.Client;
-import com.zapang.model.pojo.Message;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -33,8 +31,6 @@ public class AdminMaintainService {
     
 @Autowired 
 AdminDAOImpl adao;
-@Autowired 
-MessageDAOImpl mdao;
 @Autowired
 ClientDAOImpl cdao;
 
@@ -160,25 +156,6 @@ ClientDAOImpl cdao;
        return adao.deleteEntity(admin);
     }
 
-    public boolean sendMail(Admin sender, Admin receiver, String subject, String mail) {
-    Message msg= new Message();
-    msg.setReceiver(receiver);
-    msg.setSender(sender);
-    msg.setSubject(subject);
-    msg.setBody(mail);
-    msg=(Message) mdao.buildEntity(msg);
-    
-    return msg!=null;
-    }
-
-    public List<Message> inboxMail(Admin admin) {
-    return (List<Message>) adao.readPropertyList(admin, "Inbox");
-  
-    }
-
-    public List<Message> sentMail(Admin admin) {
-    return (List<Message>) adao.readPropertyList(admin, "Sent");
-    }
     public List<Client> getData(){
         return (List<Client>) cdao.readProperty("All",null,null,null,null,null);
     }

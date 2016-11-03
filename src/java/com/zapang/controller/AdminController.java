@@ -4,7 +4,6 @@ package com.zapang.controller;
 
 import com.zapang.model.pojo.Admin;
 import com.zapang.model.pojo.Client;
-import com.zapang.model.pojo.Message;
 import com.zapang.model.pojo.Reply;
 import com.zapang.service.AdminMaintainService;
 import java.security.Principal;
@@ -105,80 +104,7 @@ AdminMaintainService adminMaintain;
                  model.addObject("subject",type);
             return model;
 	}
-      
-        
-        
-         @RequestMapping(value = "/admin/mail")
-	public  ModelAndView adminMail(HttpServletRequest request,Principal principal) {
-              
-           
-       
-            ModelAndView model= new ModelAndView("adminmail");
-            model.addObject("admin",adminMaintain.checkPresence(new Admin(principal.getName())));
-            List<Message> inbox = adminMaintain.inboxMail(new Admin(principal.getName()));
-            model.addObject("mails", inbox);
-            return model;
-	}
-        
-
-         @RequestMapping(value = "/admin/mail/sent")
-	public  ModelAndView adminMailSent(HttpServletRequest request,Principal principal) {
-              
-           
-       
-            ModelAndView model= new ModelAndView("adminsentmail");
-            model.addObject("admin",adminMaintain.checkPresence(new Admin(principal.getName())));
-            List<Message> sent = adminMaintain.sentMail(new Admin(principal.getName()));
-            model.addObject("mails", sent);
-            return model;
-	}
-        @RequestMapping(value = "/admin/send/mail", method = RequestMethod.POST)
-	public  ModelAndView adminSendMail(HttpServletRequest request,Principal principal) {
-             
-            
-            ModelAndView model= new ModelAndView("adminmail");
-            Admin sender =adminMaintain.checkPresence(new Admin(principal.getName()));
-              List<Message> inbox = adminMaintain.inboxMail(new Admin(principal.getName()));
-            model.addObject("mails", inbox);
-            String id=request.getParameter("receiver");
-            String subject=request.getParameter("subject");
-            String mail=request.getParameter("comment");
-            Admin receiver=null;
-            if(id!=null){
-            receiver = adminMaintain.checkPresence(new Admin(id));
-            }
-            System.out.println(id+":"+principal.getName()+":"+subject+":"+mail);
-            if(sender!=null&&receiver!=null){
-            
-            
-            
-            if(adminMaintain.sendMail(sender,receiver,subject,mail)){
-                     model.addObject("message","Processed."); 
-                } 
-                else{
-                    model.addObject("message","Not processed. Please try again!"); 
-                } 
-            
-           
-           
-             
-           
-         
-              model.addObject("admin",sender);
-              sender=null;
-            receiver=null;
-            return model;
-            }
-            else{
-                model.addObject("message","Error. Please try again!"); 
-                return model; 
-
-            }
-	}
-        
-        
-        
-        
+     
        
         
         @RequestMapping(value = "/admin/settings")
@@ -276,16 +202,6 @@ AdminMaintainService adminMaintain;
             return model;
              
 	}
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        
      
     
 }

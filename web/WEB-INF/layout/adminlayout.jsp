@@ -31,7 +31,6 @@
 <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="${pageContext.request.contextPath}/admin">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/mail">MailBox</a></li>
             <li><a href="${pageContext.request.contextPath}/admin/hr">Employees</a></li>
           </ul>
          
