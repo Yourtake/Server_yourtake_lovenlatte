@@ -175,7 +175,9 @@ public class ClientDAOImpl<T> implements java.io.Serializable, GenericDAO {
                
                Float value=0.0f;
                for(Reply val:list){
+                   if(val.getAnswer()!=null&&!val.equals("")){
                    value+=Float.parseFloat(val.getAnswer());
+                   }
                }
                value/=list.size();
                average=value.toString();
