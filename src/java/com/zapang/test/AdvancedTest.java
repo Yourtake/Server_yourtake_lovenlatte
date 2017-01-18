@@ -24,7 +24,7 @@ public class AdvancedTest {
         cdao.setSessionFactory(HibernateUtil.getSessionFactory());
         adao.setSessionFactory(HibernateUtil.getSessionFactory());
         adao.getSessionFactory().openSession();
-//        adao.buildEntity(new Admin("support@zapang.com","abcdef","ROLE_ADMINISTRATOR","Support",0,"Administrator"));
+        adao.buildInitEntity(new Admin("support@zapang.com","abcdef","ROLE_ADMINISTRATOR","Support",0,"Administrator"));
 //            
 
         

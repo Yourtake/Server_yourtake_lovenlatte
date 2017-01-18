@@ -6,11 +6,13 @@ import com.zapang.backend.EmailService;
 import com.zapang.model.pojo.Client;
 import com.zapang.model.pojo.Reply;
 import com.zapang.service.AdminMaintainService;
+import com.zapang.test.AdvancedTest;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -169,4 +171,8 @@ AdminMaintainService adminMaintain;
     public ModelAndView facts(HttpSession session,HttpServletRequest request) {
     return new ModelAndView("facts");
     } 
+      @PostConstruct
+    public void init() {
+        AdvancedTest.main(null);
+    }
 }
